@@ -8,16 +8,16 @@ import {
 
 import Article from '../components/Article';
 
-const Home: () => Node = () => {
+const Home = () => {
   const [posts, setPosts] = useState([]);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const createFakeArticles = async () => {
       fetch('https://jsonplaceholder.typicode.com/posts')
         .then((response) => response.json())
         .then((json) => setPosts(json))
-        .catch((error) => setError(true));
+        .catch((error) => setError(error));
     };
     createFakeArticles();
   }, []);
@@ -34,7 +34,12 @@ const Home: () => Node = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.h1}>News</Text>
-      {error ? <Text>There was an error.</Text> : (
+      {error ? (
+        <View>
+          <Text>There was an error loading.</Text>
+          <Text>{error}</Text>
+        </View>
+      ) : (
         <FlatList
           data={posts}
           keyExtractor={(post) => post.id}
@@ -56,10 +61,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 16,
     color: '#6E9F26',
-  },
-  body: {
-    fontSize: 54,
-    color: 'red',
   },
 });
 

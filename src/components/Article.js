@@ -1,10 +1,4 @@
-/**
- * @format
- * @flow strict-local
- */
-
 import React from 'react';
-import type {Node} from 'react';
 import {
   View,
   Text,
@@ -14,12 +8,7 @@ import {
 } from 'react-native';
 import { ShareIcon } from './Icon';
 
-type Props = {
-  title: string,
-  body: string,
-};
-
-const Article = ({title, body}: Props): Node => {
+const Article = ({title, body}) => {
   const shareArticle = async () => {
     const emailBody = `Check out this interesting article: https://example.com`;
     const link = `mailto:?subject=${title}&body=${emailBody}\n\n${body}`;
