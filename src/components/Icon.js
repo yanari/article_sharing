@@ -8,16 +8,19 @@ import Icon from 'react-native-vector-icons/EvilIcons';
 
 export const ShareIcon = (props) => {
   const getIconBrand = () => {
-    if (Platform.os === 'ios') {
-      return 'share-apple';
-    } else {
-      return 'share-google';
-    }
+    return Platform.select({
+      ios: 'share-apple',
+      android: 'share-google', 
+    });
   };
 
   return (
     <TouchableOpacity onPress={props.onPress} style={styles.button}>
-      <Icon name={getIconBrand()} size={30} color="#6E9F26" />
+      <Icon
+        name={getIconBrand()}
+        size={30}
+        color="#6E9F26"
+      />
     </TouchableOpacity>
   );
 };
