@@ -9,6 +9,7 @@ import Article from '../components/Article';
 
 const Home: () => Node = () => {
   const [posts, setPosts] = useState([]);
+
   useEffect(() => {
     const createFakeArticles = async () => {
       fetch('https://jsonplaceholder.typicode.com/posts')

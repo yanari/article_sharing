@@ -10,6 +10,7 @@ import {
   Text,
   Linking,
   StyleSheet,
+  Alert,
 } from 'react-native';
 import { ShareIcon } from './Icon';
 
@@ -19,10 +20,19 @@ type Props = {
 };
 
 const Article = ({title, body}: Props): Node => {
-  const sendEmail = () => {
-    const subject = 'News article';
-    const body = 'Check out this interesting article: https://example.com';
-    Linking.openURL(`mailto:?subject=${subject}&body=${body}`);
+  const shareArticle = async () => {
+    const link = `mailto:?subject=${title}&body=${body}`;
+    try {
+      const supported = await Linking.canOpenURL(link);
+      if (supported) {
+        Linking.openURL(link);
+      } else {
+        Alert.alert('Error', `Unable to open ${link}.`);
+      }
+    } catch {
+      Alert.alert('Error', `Unable to open ${link}.`);
+    }
+    
   };
 
   return (
@@ -31,7 +41,7 @@ const Article = ({title, body}: Props): Node => {
         <Text style={styles.articleTitle}>
           {title}
         </Text>
-        <ShareIcon/>
+        <ShareIcon onPress={shareArticle}/>
       </View>
       <Text style={styles.articleBody}>
         {body}
