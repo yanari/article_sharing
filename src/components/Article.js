@@ -21,7 +21,8 @@ type Props = {
 
 const Article = ({title, body}: Props): Node => {
   const shareArticle = async () => {
-    const link = `mailto:?subject=${title}&body=${body}`;
+    const emailBody = `Check out this interesting article: https://example.com`;
+    const link = `mailto:?subject=${title}&body=${emailBody}\n\n${body}`;
     try {
       const supported = await Linking.canOpenURL(link);
       if (supported) {
@@ -65,6 +66,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   articleTitle: {
+    color: '#6E9F26',
     fontWeight: 'bold',
     flex: 1
   },
